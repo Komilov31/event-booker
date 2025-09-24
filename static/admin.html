@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Система бронирования</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Админ-панель системы бронирования</h1>
+            <p>Управление мероприятиями и мониторинг бронирований</p>
+        </header>
+
+        <div class="admin-panel">
+            <!-- Создание мероприятия -->
+            <section class="create-event-section">
+                <h2>📅 Создать новое мероприятие</h2>
+                <form id="createEventForm" class="event-form">
+                    <div class="form-group">
+                        <label for="eventName">Название мероприятия:</label>
+                        <input type="text" id="eventName" name="eventName" required placeholder="Введите название мероприятия">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Дата и время мероприятия:</label>
+                        <input type="datetime-local" id="eventDate" name="eventDate" required placeholder="Выберите дату и время">
+                    </div>
+                    <div class="form-group">
+                        <label for="allSeats">Количество мест:</label>
+                        <input type="number" id="allSeats" name="allSeats" min="1" required placeholder="Введите количество мест">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Создать мероприятие</button>
+                </form>
+            </section>
+
+            <!-- Список всех мероприятий -->
+            <section class="events-list-section">
+                <h2>📋 Все мероприятия</h2>
+                <div class="events-controls">
+                    <button id="refreshEvents" class="btn btn-secondary">🔄 Обновить список</button>
+                </div>
+                <div id="eventsList" class="events-grid">
+                    <div class="loading">Загрузка мероприятий...</div>
+                </div>
+            </section>
+
+            <!-- Все бронирования -->
+            <section class="bookings-overview-section">
+                <h2>📋 Все бронирования</h2>
+                <div class="bookings-controls">
+                    <button id="refreshBookings" class="btn btn-secondary">🔄 Обновить бронирования</button>
+                    <div class="filter-controls">
+                        <select id="statusFilter" class="btn btn-secondary">
+                            <option value="all">Все статусы</option>
+                            <option value="pending">Ожидает оплаты</option>
+                            <option value="paid">Оплачено</option>
+                            <option value="cancelled">Отменено</option>
+                        </select>
+                        <button id="bulkConfirmPayment" class="btn btn-success">✅ Подтвердить выбранные</button>
+                    </div>
+                </div>
+                <div id="allBookingsTable" class="bookings-table">
+                    <div class="loading">Загрузка бронирований...</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Модальное окно для детальной информации -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Детали мероприятия</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="static/admin.js"></script>
+</body>
+</html>

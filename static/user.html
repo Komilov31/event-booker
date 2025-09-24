@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система бронирования мероприятий</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎫 Система бронирования мероприятий</h1>
+            <p>Бронируйте места на интересующие вас события</p>
+        </header>
+
+        <div class="user-panel">
+            <!-- Список доступных мероприятий -->
+            <section class="events-section">
+                <h2>📅 Доступные мероприятия</h2>
+                <div class="events-controls">
+                    <button id="refreshEvents" class="btn btn-secondary">🔄 Обновить список</button>
+                    <div class="user-info">
+                        <span>Ваш Telegram ID: </span>
+                        <input type="number" id="userTelegramId" placeholder="Введите ваш Telegram ID" value="123456789">
+                    </div>
+                </div>
+                <div id="eventsList" class="events-grid">
+                    <div class="loading">Загрузка мероприятий...</div>
+                </div>
+            </section>
+
+            <!-- Активные бронирования -->
+            <section class="bookings-section">
+                <h2>🎫 Мои бронирования</h2>
+                <div id="bookingsList" class="bookings-list">
+                    <div class="loading">Загрузка бронирований...</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Модальное окно для бронирования -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="bookingModalTitle">Бронирование места</h2>
+            <form id="bookingForm" class="booking-form">
+                <div id="bookingModalBody"></div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Забронировать</button>
+                    <button type="button" class="btn btn-secondary close-modal">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно для подтверждения оплаты -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="confirmModalTitle">Подтверждение оплаты</h2>
+            <div id="confirmModalBody"></div>
+            <div class="form-actions">
+                <button id="confirmPayment" class="btn btn-success">✅ Подтвердить оплату</button>
+                <button type="button" class="btn btn-secondary close-modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/user.js"></script>
+</body>
+</html>

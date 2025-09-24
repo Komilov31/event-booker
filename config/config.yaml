@@ -1,0 +1,10 @@
+postgres:
+  host: "postgres"
+  name: "event-booker"
+  user: "user"
+  port: 5432
+http_server:
+  address: ":8080"
+rabbitmq:
+  host: "rabbitmq"
+  port: ":5672"

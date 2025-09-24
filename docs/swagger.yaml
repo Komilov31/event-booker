@@ -1,0 +1,243 @@
+basePath: /
+definitions:
+  github_com_Komilov31_event-booker_internal_dto.BookingDTO:
+    properties:
+      created_at:
+        type: string
+      event_id:
+        type: integer
+      event_name:
+        type: string
+      id:
+        type: integer
+      status:
+        type: string
+      telegram_id:
+        type: integer
+    type: object
+  github_com_Komilov31_event-booker_internal_dto.CreateBooking:
+    properties:
+      event_id:
+        type: integer
+      places_count:
+        type: integer
+      telegram_id:
+        type: integer
+    type: object
+  github_com_Komilov31_event-booker_internal_dto.CreateEvent:
+    properties:
+      all_seats:
+        type: integer
+      event_name:
+        type: string
+    type: object
+  github_com_Komilov31_event-booker_internal_model.Booking:
+    properties:
+      created_at:
+        type: string
+      event_id:
+        type: integer
+      id:
+        type: integer
+      places_count:
+        type: integer
+      status:
+        type: string
+      telegram_id:
+        type: integer
+    type: object
+  github_com_Komilov31_event-booker_internal_model.Event:
+    properties:
+      all_seats:
+        type: integer
+      booked:
+        type: integer
+      bookings:
+        items:
+          $ref: '#/definitions/github_com_Komilov31_event-booker_internal_model.Booking'
+        type: array
+      created_at:
+        type: string
+      event_name:
+        type: string
+      id:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Event Booker service to create and manage events and bookings.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Event Booker API
+  version: "1.0"
+paths:
+  /events:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all available events
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_Komilov31_event-booker_internal_model.Event'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all events
+      tags:
+      - events
+    post:
+      consumes:
+      - application/json
+      description: Create a new event with specified details
+      parameters:
+      - description: Event data
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Komilov31_event-booker_internal_dto.CreateEvent'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Komilov31_event-booker_internal_model.Event'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create an event
+      tags:
+      - events
+  /events/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get detailed information about a specific event
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Komilov31_event-booker_internal_model.Event'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get event by ID
+      tags:
+      - events
+  /events/{id}/book:
+    post:
+      consumes:
+      - application/json
+      description: Create a new booking for a specific event
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Booking data
+        in: body
+        name: booking
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_Komilov31_event-booker_internal_dto.CreateBooking'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_Komilov31_event-booker_internal_model.Booking'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a booking
+      tags:
+      - bookings
+  /events/{id}/confirm:
+    post:
+      consumes:
+      - application/json
+      description: Confirm payment for a specific booking
+      parameters:
+      - description: Booking ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Confirm payment
+      tags:
+      - bookings
+swagger: "2.0"
