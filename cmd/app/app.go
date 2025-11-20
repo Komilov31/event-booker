@@ -22,6 +22,11 @@ import (
 	"github.com/wb-go/wbf/zlog"
 )
 
+const (
+	MaxOpenConns = 10
+	MaxIdleConns = 5
+)
+
 func Run() error {
 	zlog.Init()
 
@@ -33,7 +38,7 @@ func Run() error {
 		config.Cfg.Postgres.Name,
 	)
 
-	opts := &dbpg.Options{MaxOpenConns: 10, MaxIdleConns: 5}
+	opts := &dbpg.Options{MaxOpenConns: MaxOpenConns, MaxIdleConns: MaxIdleConns}
 	db, err := dbpg.New(dbString, []string{}, opts)
 	if err != nil {
 		log.Fatal("could not init db: " + err.Error())
@@ -72,8 +77,8 @@ func registerRoutes(engine *ginext.Engine, handler *handler.Handler) {
 	engine.Static("/static", "/app/static")
 
 	// POST requests
-	engine.POST("/events", handler.CreateEvent)
-	engine.POST("/events/:id/book", handler.CreateBooking)
+	engine.POST("/create_event", handler.CreateEvent)
+	engine.POST("/update_event", handler.CreateBooking)
 	engine.POST("/events/:id/confirm", handler.ConfirmPayment)
 
 	// GET requests
